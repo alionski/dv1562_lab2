@@ -18,4 +18,9 @@ Structure:
 └── README.md
 ```
 
-Python 3.7, pip 19.1
+Usage:
+- install  `docker`, `docker-compose`, `docker-machine`, `docker-swarm`
+- cd into parent directory, i.e. `dv1562_lab2`
+- `docker-compose build` and then `docker-compose up`
+
+(Python 3.7, pip 19.1)

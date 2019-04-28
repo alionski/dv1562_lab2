@@ -8,7 +8,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 Base = declarative_base()
-engine = create_engine("postgresql://docker:docker@db/lab_2_db",
+engine = create_engine("postgresql://docker:docker@lab_2_db/lab_2_db",
                        pool_size=10, max_overflow=20)
 Session = sessionmaker(bind=engine)
 
@@ -38,7 +38,7 @@ def get_cities():
 @app.route("/", methods=['GET'])
 def hello():
     cities = get_cities()
-    return render_template("main.html", cities=(cities if cities else None))
+    return render_template("main.html", cities=(cities if cities else ""))
 
 
 @app.route("/", methods=['POST'])
@@ -54,7 +54,7 @@ def weather():
     save_city(city)
 
     cities = get_cities()
-    return render_template("main.html", city=city, filename=filename, cities=(cities if cities else None))
+    return render_template("main.html", city=city, filename=filename, cities=(cities if cities else ""))
 
 
 if __name__ == '__main__':

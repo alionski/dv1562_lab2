@@ -9,6 +9,8 @@ RUN groupadd uwsgigroup && useradd -m -g uwsgigroup -s /bin/bash/ uwsgi
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY . .
+
 EXPOSE 3031
 
 RUN chown -R uwsgi:uwsgigroup /usr/src/lab_2
