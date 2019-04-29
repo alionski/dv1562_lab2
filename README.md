@@ -6,6 +6,8 @@ Structure should be like this:
 │   ├── Dockerfile
 │   ├── requirements.txt (list of pip libs used)
 │   ├── run.py (the Python app itself (Flask/uWSGI)
+│   ├── static
+│   │   └── images (has to be pre-created)
 │   └── templates
 │       └── main.html (Jinja template)
 ├── db
