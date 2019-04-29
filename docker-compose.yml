@@ -7,7 +7,7 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 50M
+          memory: 150M
       restart_policy:
         condition: on-failure
     volumes:
@@ -25,7 +25,7 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 50M
+          memory: 150M
       restart_policy:
         condition: on-failure
     volumes:
@@ -43,7 +43,7 @@ services:
       resources:
         limits:
           cpus: "0.1"
-          memory: 50M
+          memory: 150M
       restart_policy:
         condition: on-failure
     volumes:
