@@ -3,24 +3,28 @@ services:
   db:
     image: postgres
     deploy:
+      # let's use one only
       replicas: 1
       resources:
         limits:
           cpus: "0.1"
+          # this is probably too little, but will work for PoC
           memory: 150M
       restart_policy:
         condition: on-failure
     volumes:
-      - ./db/:/docker-entrypoint-initdb.d
-      - ./db/data:/var/lib/postgresql/data
+      - ./db/:/docker-entrypoint-initdb.d  # uses bind mount
+      - ./db_data:/var/lib/postgresql/data # uses bind mount
     ports:
       - 5432:5432
     networks:
       - db_net
 
   backend:
-    image: alionski/lab2_backend:latest
+    # image: https://cloud.docker.com/repository/docker/alionski/lab_2_backend
+    image: alionski/lab_2_backend:latest
     deploy:
+      # make it three to load-balance
       replicas: 3
       resources:
         limits:
@@ -29,7 +33,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - images_vol:/usr/src/lab_2/static/images
+      - images_vol:/usr/src/lab_2/static/images  # uses named volume
     depends_on:
       - db
     networks:
@@ -39,6 +43,7 @@ services:
   frontend:
     image: nginx:1.13-alpine
     deploy:
+      # make it three to load-balance
       replicas: 3
       resources:
         limits:
@@ -47,7 +52,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro  # uses bind mount
     depends_on:
       - backend
     ports:
@@ -55,10 +60,13 @@ services:
     networks:
       - backend_net
 
+# one network for database and backend, and one for frontend and backend
+# created with default params
 networks:
   db_net:
   backend_net:
 
+# named volume for pictures
 volumes:
   images_vol:
 
